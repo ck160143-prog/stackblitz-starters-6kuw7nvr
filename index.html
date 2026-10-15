@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baba AI YouTube Agent</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#10121c;color:white}
+header{background:#191d2d;padding:22px 15px;text-align:center;border-bottom:2px solid #8055ff}
+header h1{margin:0;color:#b9a1ff;font-size:25px}
+header p{color:#ccc;font-size:13px}
+.container{padding:16px;max-width:700px;margin:auto}
+.card{background:#1b2031;border:1px solid #343a51;border-radius:14px;padding:17px;margin-bottom:15px}
+h2{font-size:19px;margin-top:0}
+label{display:block;margin:12px 0 6px}
+input,textarea,select{width:100%;padding:12px;border-radius:8px;border:1px solid #454b63;background:#101522;color:white;font-size:15px}
+textarea{min-height:100px;resize:vertical}
+button{width:100%;padding:13px;margin-top:10px;border:0;border-radius:9px;background:#7950f2;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+button:active{transform:scale(.98)}
+.secondary{background:#303950}
+.green{background:#18865d}
+.status{background:#111725;padding:12px;border-radius:8px;color:#8fffc1;overflow-wrap:anywhere}
+.small{font-size:12px;color:#b9bfd0;line-height:1.6}
+#result{white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid button{margin:0}
+</style>
+</head>
+<body>
+<header>
+<h1>🤖 BABA AI</h1>
+<p>आपका अपना YouTube Automation Agent</p>
+</header><div class="container">
+<div class="card">
+<h2>📺 YouTube Channel</h2>
+<p id="channelStatus" class="status">अभी चैनल कनेक्ट नहीं है।</p>
+<button onclick="connectYouTube()">🔗 YouTube Connect की जानकारी</button>
+<p class="small">वास्तविक चैनल कनेक्शन के लिए Google OAuth और YouTube API सेटअप जरूरी है।</p>
+</div><div class="card">
+<h2>🔎 वीडियो का विषय</h2>
+<label>अपना विषय लिखें</label>
+<input id="topic" placeholder="जैसे: ताजमहल के रहस्य">
+<label>वीडियो की भाषा</label>
+<select id="language">
+<option>हिंदी</option>
+<option>English</option>
+</select>
+<label>वीडियो की अवधि</label>
+<select id="duration">
+<option value="5">5 मिनट</option>
+<option value="10">10 मिनट</option>
+<option value="15">15 मिनट</option>
+<option value="30" selected>30 मिनट</option>
+</select>
+<button onclick="makeOutline()">📝 वीडियो की रूपरेखा बनाएँ</button>
+<button class="secondary" onclick="saveProject()">💾 प्रोजेक्ट सेव करें</button>
+</div><div class="card">
+<h2>✍️ AI Script Studio</h2>
+<p class="small">यह शुरुआती डेमो है। वास्तविक AI स्क्रिप्ट बनाने के लिए AI API कनेक्ट करना होगा।</p>
+<textarea id="script" placeholder="यहाँ आपकी वीडियो स्क्रिप्ट दिखाई देगी..."></textarea>
+<div class="grid">
+<button onclick="copyScript()">📋 कॉपी</button>
+<button class="secondary" onclick="downloadScript()">⬇️ डाउनलोड</button>
+</div>
+</div><div class="card">
+<h2>🎬 वीडियो निर्माण</h2>
+<button onclick="showFeature('voice')">🎙️ हिंदी आवाज बनाएँ</button>
+<button onclick="showFeature('images')">🖼️ वीडियो की तस्वीरें बनाएँ</button>
+<button onclick="showFeature('video')">🎞️ पूरा वीडियो बनाएँ</button>
+<button onclick="showFeature('thumbnail')">🖼️ थंबनेल बनाएँ</button>
+<button onclick="showFeature('seo')">📈 YouTube SEO तैयार करें</button>
+<button class="green" onclick="showFeature('upload')">📤 YouTube पर अपलोड करें</button>
+<p id="featureStatus" class="status">आपका एजेंट शुरू होने के लिए तैयार है।</p>
+</div><div class="card">
+<h2>📋 एजेंट आउटपुट</h2>
+<div id="result">नमस्ते! Baba AI YouTube Agent में आपका स्वागत है।</div>
+</div>
+</div><script>
+function connectYouTube(){
+ document.getElementById('channelStatus').textContent =
+ 'कनेक्शन अभी सेटअप नहीं है। YouTube API और Google OAuth की जरूरत है।';
+ document.getElementById('result').textContent =
+ 'अगला कदम: Google Cloud में प्रोजेक्ट बनाकर YouTube Data API v3 चालू करें और OAuth सेटअप करें।';
+}
+function makeOutline(){
+ const topic=document.getElementById('topic').value.trim();
+ const duration=document.getElementById('duration').value;
+ const lang=document.getElementById('language').value;
+ if(!topic){alert('पहले वीडियो का विषय लिखें।');return;}
+ const outline =
+ 'BABA AI — VIDEO PLAN\\n\\n'+
+ 'विषय: '+topic+'\\n'+
+ 'भाषा: '+lang+'\\n'+
+ 'अवधि: '+duration+' मिनट\\n\\n'+
+ '1. शुरुआत: दर्शकों के लिए दिलचस्प सवाल\\n'+
+ '2. विषय का परिचय और पृष्ठभूमि\\n'+
+ '3. मुख्य जानकारी — भाग 1\\n'+
+ '4. मुख्य जानकारी — भाग 2\\n'+
+ '5. उदाहरण और तथ्य-जाँच\\n'+
+ '6. रोचक निष्कर्ष\\n'+
+ '7. दर्शकों से लाइक और सब्सक्राइब करने का अनुरोध\\n\\n'+
+ 'नोट: यह शुरुआती रूपरेखा है। पूरी स्क्रिप्ट बनाने के लिए AI सेवा कनेक्ट करनी होगी।';
+ document.getElementById('script').value=outline;
+ document.getElementById('result').textContent='✅ वीडियो की रूपरेखा तैयार हो गई!';
+}
+function copyScript(){
+ const text=document.getElementById('script').value;
+ if(!text){alert('पहले रूपरेखा बनाएँ।');return;}
+ if(navigator.clipboard && navigator.clipboard.writeText){
+  navigator.clipboard.writeText(text).then(()=>alert('स्क्रिप्ट कॉपी हो गई!')).catch(()=>fallbackCopy(text));
+ }else{fallbackCopy(text);}
+}
+function fallbackCopy(text){
+ const area=document.getElementById('script');
+ area.focus();area.select();
+ try{document.execCommand('copy');alert('कॉपी करने की कोशिश पूरी हुई।');}
+ catch(e){alert('टेक्स्ट चुनकर Copy दबाएँ।');}
+}
+function downloadScript(){
+ const text=document.getElementById('script').value;
+ if(!text){alert('पहले स्क्रिप्ट बनाएँ।');return;}
+ const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;a.download='Baba-AI-Script.txt';a.click();
+ URL.revokeObjectURL(url);
+}
+function saveProject(){
+ const data={
+ topic:document.getElementById('topic').value,
+ duration:document.getElementById('duration').value,
+ language:document.getElementById('language').value,
+ script:document.getElementById('script').value
+ };
+ try{
+  localStorage.setItem('babaAIProject',JSON.stringify(data));
+  alert('प्रोजेक्ट इस ब्राउज़र में सेव हो गया!');
+ }catch(e){alert('सेव नहीं हो पाया। ब्राउज़र स्टोरेज की अनुमति जाँचें।');}
+}
+function showFeature(feature){
+ const messages={
+ voice:'🎙️ आवाज बनाने के लिए Text-to-Speech सेवा कनेक्ट करनी होगी।',
+ images:'🖼️ तस्वीरें बनाने के लिए इमेज जनरेशन सेवा कनेक्ट करनी होगी।',
+ video:'🎬 वीडियो बनाने के लिए आवाज, दृश्य और वीडियो रेंडरिंग को जोड़ना होगा।',
+ thumbnail:'🖼️ थंबनेल के लिए इमेज जनरेशन या डिजाइन टूल कनेक्ट करना होगा।',
+ seo:'📈 विषय लिखकर पहले रूपरेखा बनाएँ। AI SEO सेवा अगला चरण है।',
+ upload:'📤 सुरक्षित अपलोड के लिए Google OAuth और YouTube Data API सेटअप करना होगा।'
+ };
+ document.getElementById('featureStatus').textContent=messages[feature]||'अगला चरण तैयार करें।';
+}
+try{
+ const saved=JSON.parse(localStorage.getItem('babaAIProject')||'null');
+ if(saved){
+  document.getElementById('topic').value=saved.topic||'';
+  document.getElementById('duration').value=saved.duration||'30';
+  document.getElementById('language').value=saved.language||'हिंदी';
+  document.getElementById('script').value=saved.script||'';
+ }
+}catch(e){}
+</script></body>
+</html>
